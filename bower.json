@@ -1,0 +1,19 @@
+{
+  "name": "fun_js",
+  "version": "0.0.0",
+  "authors": [
+    "individual11 <david@individual11.com>"
+  ],
+  "description": "just a collection of random js fun stuff",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}
