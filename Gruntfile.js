@@ -1,18 +1,20 @@
 // Generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
 'use strict';
-var moment = require('moment');
  
 var LIVERELOAD_PORT = 35729;
-var RUNNING_PORT = <%=runningPortNumber%>; // <- if you change this, you need to change in public/js/app.js and recompile
+var RUNNING_PORT = 1337; // <- if you change this, you need to change in public/js/app.js and recompile
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+
+
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
+
  
 module.exports = function (grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
- 
+
   grunt.initConfig({
 
     less: {
@@ -51,18 +53,6 @@ module.exports = function (grunt) {
       }
     },
 
-    concat: {
-      options: {
-        separator: ';',
-        stripBanners:true
-      },
-      dist: {
-        src: ['public/js/app.js'],
-        dest: 'public/js/concat.js',
-      },
-    },
-
-    /*
     jshint: {
       options: {
         curly: true,
@@ -74,10 +64,21 @@ module.exports = function (grunt) {
         }
       },
       files:{
-        src:['public/js/concat.js']
+        src:['public/js/app.js']
       } 
     },
 
+    concat: {
+      options: {
+        separator: ';',
+        stripBanners:true
+      },
+      dist: {
+        src: ['public/js/app.js'],
+        dest: 'public/js/concat.js',
+      },
+    },
+    
     uglify: {
       options: {
         mangle: false
@@ -88,61 +89,31 @@ module.exports = function (grunt) {
         }
       }
     },
-  */
+  
     // Watch Config
     watch: {
-        files: ['views/**/*'],
         options: {
-            livereload: true
+            livereload: true,
+            nospawn:true
         },
-        scripts: {
-            files: [
-                'public/js/**/*.js'
-            ],
-            tasks:['build']
+        scripts:{
+          files:['public/js/**/*.js'],
+          tasks:['buildScripts']
         },
-        css: {
-            files: [
-                'public/css/**/*.css',
-            ],
+        css:{
+          files:['public/bower_components/bootstrap/less/**/*.less'],
+          tasks:['buildCSS']
         },
-        less: {
-            files: ['public/bower_components/bootstrap/less/**/*.less'],
-            tasks: ['build']
-        }
+        files: ['index.html']
     },
 
     connect: {
-      options: {
-        port: RUNNING_PORT,//variable at top of this file
-        // change this to '0.0.0.0' to access the server from outside
-        hostname: 'localhost'
-      },
       server: {
-        port: RUNNING_PORT,
-        base: './'
-      },
-      livereload: {
         options: {
-          middleware: function (connect) {
-            return [
-              lrSnippet,
-              mountFolder(connect, '.')
-            ];
-          }
+          port: RUNNING_PORT,
+          base: './'
         }
       }
-    },
-
-    // run 'watch' and 'nodemon' indefinitely, together
-    // 'launch' will just kick it off, and won't stay running
-    concurrent: {
-        target: {
-            tasks: ['watch', 'launch'],
-            options: {
-                logConcurrentOutput: true
-            }
-        }
     },
 
     wait:{
@@ -168,13 +139,14 @@ module.exports = function (grunt) {
     }
 
   });
- 
-  //grunt.registerTask('server', ['build', 'connect:livereload', 'open', 'watch']);
- 
-  grunt.registerTask('build', ['<%=format%>', 'concat', 'uglify']);
 
-  grunt.registerTask('launch', ['connect','wait', 'open']);
+  grunt.registerTask('buildScripts', ['jshint', 'concat', 'uglify']);
+  grunt.registerTask('buildCSS', ['less']);
 
-  grunt.registerTask('default', ['build', 'concurrent']);
+  grunt.registerTask('build', ['buildCSS', 'buildScripts']);
+
+  grunt.registerTask('launch', ['connect:server', 'wait', 'open', 'watch']);
+
+  grunt.registerTask('default', ['build', 'launch']);
 
 };
