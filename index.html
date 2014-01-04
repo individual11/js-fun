@@ -19,29 +19,46 @@
 
     <div class="container-full">
 
-      <div class="section jumbotron darkestGray text-center red-color">
+      <div id="top" class="section jumbotron darkestGray text-center red-color">
         <div class="container">
           <div class="row">
             <div class="col-lg-12">
               <h1>JS~<strong>Fun</strong></h1>
               <p>A collection of fun JavaScript libraries I've found around the interwebs.</p>
-            </div><!-- /col-lg-12 -->
+            </div><!-- /col -->
           </div><!-- /row -->
           <div class="row">
-            <div class="col-lg-12">
-              <div class="hex hex-3 turquoise darkerGray-color">   
-                <div class="inner">
-                    <h3>Figlet</h3>
-                </div>    
-                <a href="#"></a>
-                <div class="corner-1"></div>
-                <div class="corner-2"></div>    
-              </div>
-            </div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+              <div class="row">
+                <div class="col-sm-3">
+                  <a class="scroll-link" href="#figlet">
+                    <div class="hex hex-3 turquoise darkerGray-color">   
+                      <div class="inner">
+                          <h3>Figlet</h3>
+                      </div>
+                      <div class="corner-1"></div>
+                      <div class="corner-2"></div>    
+                    </div><!-- /hex -->
+                  </a>
+                </div><!-- /col -->
+              
+                <div class="col-sm-3">
+                  <a class="scroll-link" href="#meme">
+                    <div class="hex hex-3 red lightGray-color">   
+                      <div class="inner">
+                        <h3>Figlet</h3>
+                      </div>    
+                      <div class="corner-1"></div>
+                      <div class="corner-2"></div>    
+                    </div><!-- /hex -->
+                  </a>
+                </div><!-- /col -->
+              </div><!-- /row -->
+            </div><!-- /col -->
           </div><!-- /row -->
         </div><!-- /container -->
       </div>
-        <div class="section turquoise darkerGray-color">
+        <div id="figlet" class="section turquoise darkerGray-color">
           <div class="container">
             <h2>Figlet</h2>
             <p>The easiest way to write with ASCII fonts</p>
@@ -85,8 +102,12 @@
     
     <!-- jQuery --> 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="public/bower_components/jQuery/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="public/bower_components/jquery/jquery.min.js"><\/script>')</script>
 
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script>window.jQuery.ui || document.write('<script src="public/bower_components/jquery-ui/ui/minified/jquery-ui.min.js"><\/script>')</script>
+
+  <script src="public/bower_components/Scroll-To/scrollTo.min.js"></script>
 
   <!-- APP CODE -->
   <script src="public/js/app.min.js"></script>
