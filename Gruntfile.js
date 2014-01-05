@@ -26,7 +26,7 @@ module.exports = function (grunt) {
           cleancss: true
         },
         files: {
-          "public/css/core.css": "public/bower_components/bootstrap/less/bootstrap.less"
+          "public/css/core.css": "public/less/core.less"
         }
       }
     },
@@ -101,8 +101,12 @@ module.exports = function (grunt) {
           tasks:['buildScripts']
         },
         css:{
-          files:['public/bower_components/bootstrap/less/**/*.less'],
+          files:['public/bower_components/bootstrap/less/**/*.less', "public/less/**/*.less"],
           tasks:['buildCSS']
+        },
+        json:{
+          files:['public/json/**/*.json'],
+          tasks:['compileJSON', 'buildCSS']
         },
         files: ['index.html']
     },
@@ -140,10 +144,20 @@ module.exports = function (grunt) {
 
   });
 
+  grunt.registerTask('compileJSON', 'Compiling color palette from JSON',function(){
+    var swatches = grunt.file.readJSON('public/json/color-swatches.json');
+    var content = '/* COLOR SWATCHES FROM public/json/color-swatches.json */\n';
+    for(var key in swatches){
+      content += "." + key + "{ background:" + swatches[key] + "; a{ color:lighten(" + swatches[key] + ", 10%); }}\n";
+      content += "." + key + "-color{ color:" + swatches[key] + " !important; }\n";
+    }
+    grunt.file.write('public/less/color-swatches.less', content);
+  });
+
   grunt.registerTask('buildScripts', ['jshint', 'concat', 'uglify']);
   grunt.registerTask('buildCSS', ['less']);
 
-  grunt.registerTask('build', ['buildCSS', 'buildScripts']);
+  grunt.registerTask('build', ['compileJSON', 'buildCSS', 'buildScripts']);
 
   grunt.registerTask('launch', ['connect:server', 'wait', 'open', 'watch']);
 
