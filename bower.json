@@ -20,6 +20,7 @@
     "jquery-ui": "~1.10.3",
     "Scroll-To": "*",
     "jquery": "~2.0.3",
-    "bootstrap":"~3.0.3"
+    "bootstrap": "~3.0.3",
+    "figlet.js": "https://github.com/patorjk/figlet.js.git"
   }
 }
